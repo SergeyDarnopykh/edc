@@ -11,6 +11,22 @@
 |
 */
 
+use App\Article;
+
 Route::get('/', function () {
-    return view('welcome');
+    $articles = Article::latest()->get();
+
+    return view('home', [
+        'articles' => $articles
+    ]);
 });
+
+Route::get('/articles', 'ArticlesController@index');
+Route::post('/articles', 'ArticlesController@store');
+Route::get('/articles/create', 'ArticlesController@create');
+
+Route::get('/articles/{article}', 'ArticlesController@show');
+Route::put('/articles/{article}', 'ArticlesController@update');
+Route::delete('/articles/{article}', 'ArticlesController@destroy');
+Route::get('/articles/{article}/edit', 'ArticlesController@edit');
+

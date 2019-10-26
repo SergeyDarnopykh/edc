@@ -1,0 +1,157 @@
+.label-top() {
+    font-size: 12px;
+    top: -4px;
+}
+
+.form-wrapper {
+    padding: 40px 78px 15px;
+    background-color: @white;
+    box-shadow: @box-shadow;
+
+    @media @mobile {
+        padding: 24px 16px;
+    }
+}
+
+.form {
+    overflow: hidden;
+
+    &__info {
+        text-align: center;
+    }
+
+    &__title {
+        margin-bottom: 20px;
+        .font-bolder(2.4);
+        text-transform: uppercase;
+        line-height: 29px;
+
+        @media @mobile {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+    }
+
+    &__description {
+        margin-bottom: 30px;
+        .font-normal(1.8);
+
+        @media @mobile {
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+    }
+
+    &__row {
+        position: relative;
+        display: flex;
+        margin-bottom: 25px;
+
+        &._center {
+            justify-content: center;
+        }
+
+        &._small-margin {
+            margin-bottom: 20px;
+
+            @media @mobile {
+                margin-bottom: 15px;
+            }
+        }
+
+        .btn {
+            @media @mobile {
+                margin-bottom: -25px;
+            }
+        }
+    }
+
+    &__cell {
+        position: relative;
+        display: inline-block;
+
+        &:not(:last-child) {
+            padding-right: 2rem;
+        }
+
+        @media @mobile {
+            display: block;
+            margin-bottom: 20px;
+        }
+    }
+
+    &__input {
+        width: 480px;
+        padding: 10px 0 3px;
+        .font-normal(1.4);
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid @black;
+
+        &:-webkit-autofill {
+            background-color: white !important;
+        }
+
+        &:focus ~ label {
+            .label-top();
+        }
+
+        &._short {
+            width: 200px;
+            margin-right: 35px;
+        }
+
+        &._medium {
+            width: 240px;
+        }
+
+        @media @mobile {
+            width: 100% !important;
+        }
+    }
+
+    &__textarea {
+        width: 100%;
+        padding: 22px 16px;
+        .font-normal(1.4);
+        border-color: @black;
+
+        & ~ label {
+            top: 20px;
+            left: 16px;
+
+            &:not(._init),
+            &._unhighlight {
+                top: 7px;
+            }
+        }
+
+        &:focus ~ label {
+            font-size: 12px;
+            top: 7px;
+        }
+    }
+
+    &__label {
+        position: absolute;
+        top: 6px;
+        left: 0;
+        height: auto;
+        .font-normal(1.6);
+        color: #B3B3B3;
+        line-height: 1.2;
+        transition: .300s ease top, .300s ease font-size;
+        cursor: text;
+        user-select: none;
+
+        &:not(._init),
+        &._unhighlight {
+            .label-top();
+        }
+    }
+
+    .badge-warning {
+        position: absolute;
+        top: -22px;
+    }
+}

@@ -12,4 +12,12 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .less('resources/less/app.less', 'public/css');
+
+if (process.env.NODE_ENV === 'development') {
+    mix.options({
+        processCssUrls: false
+    }).browserSync({
+        proxy: 'localhost:8000',
+    });
+}

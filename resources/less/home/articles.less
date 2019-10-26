@@ -1,0 +1,44 @@
+.article {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background-color: @white;
+    box-shadow: @box-shadow;
+
+    &__title {
+        padding-bottom: 1rem;
+        .font-bold(2.4);
+    }
+
+    &__body {
+        .font-normal(1.6);
+    }
+
+    &__buttons {
+        display: flex;
+    }
+
+    &__btn{
+        display: block;
+        padding: 1.2rem 2rem;
+        border-radius: 1rem;
+        .font-bold(1.4);
+        color: @white;
+        cursor: pointer;
+
+        &:first-child {
+            margin-right: 4rem;
+        }
+
+        &._edit {
+            color: @black;
+            background-color: @yellow;
+        }
+
+        &._delete {
+            background-color: @red;
+        }
+    }
+}
