@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="form-wrapper">
-        <form class="form" action="/articles/{{ $article->code }}" method="POST">
+        <form class="form" action="{{ route('articles.update', $article) }}" method="POST">
             @csrf
             @method('PUT')
 

@@ -12,4 +12,13 @@ class Article extends Model
         'short_description',
         'body'
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'code';
+    }
+
+    public function path() {
+        return route('articles.show', $this);
+    }
 }

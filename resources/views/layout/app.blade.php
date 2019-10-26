@@ -52,7 +52,7 @@
             </a>
         </div>
         <div class="header-links">
-            <a class="header-link" href="/articles/create">
+            <a class="header-link" href="{{ route('articles.create') }}">
                 Добавить статью
             </a>
         </div>

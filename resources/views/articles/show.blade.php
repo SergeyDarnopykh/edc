@@ -17,7 +17,7 @@
                    редактировать
                </button>
            </a>
-           <form action="/articles/{{ $article->code }}" method="POST">
+           <form action="{{ route('articles.destroy', $article) }}" method="POST">
                @csrf
                @method('DELETE')
 

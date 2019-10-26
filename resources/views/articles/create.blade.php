@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="form-wrapper">
-        <form class="form" action="/articles" method="post">
+        <form class="form" action="{{ route('articles.store') }}" method="post">
             @csrf
             <div class="form__info">
                 <div class="form__title">

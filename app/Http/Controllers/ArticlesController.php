@@ -15,7 +15,7 @@ class ArticlesController extends Controller
      */
     public function index()
     {
-        $articles = Article::all();
+        $articles = Article::latest()->get();
 
         return view('articles.index', compact('articles'));
     }
@@ -33,78 +33,70 @@ class ArticlesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $article = new Article([
-            'title' => request('title'),
-            'code' => request('code'),
-            'short_description' => request('short_description'),
-            'body' => request('body')
-        ]);
+        Article::create($this->validateArticle());
 
-        $article->save();
-
-        return redirect('/articles');
+        return redirect(route('articles.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  string  $code
+     * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show($code)
+    public function show(Article $article)
     {
-        $article = Article::where('code', $code)->firstOrFail();
-
         return view('articles.show', compact('article'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  string  $code
+     * @param  Article $article
      * @return \Illuminate\Http\Response
      */
-    public function edit($code)
+    public function edit(Article $article)
     {
-        $article = Article::where('code', $code)->firstOrFail();
-
         return view('articles.edit', compact('article'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  string  $code
+     * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $code)
+    public function update(Article $article)
     {
-        Article::where('code', $code)->update([
-            'title' => request('title'),
-            'code' => request('code'),
-            'short_description' => request('short_description'),
-            'body' => request('body')
-        ]);
+        $article->update($this->validateArticle());
 
-        return redirect('/articles');
+        return redirect(route('articles.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  string  $code
+     * @param  Article $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy($code)
+    public function destroy(Article $article)
     {
-        Article::where('code', $code)->delete();
+        $article->delete();
 
-        return redirect('/articles');
+        return redirect(route('articles.index'));
+    }
+
+    protected function validateArticle()
+    {
+        return request()->validate([
+            'title' => 'required',
+            'code' => 'required',
+            'short_description' => 'required',
+            'body' => 'required',
+        ]);
     }
 }
