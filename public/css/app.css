@@ -246,6 +246,13 @@ button {
   background-color: #fff;
   box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.35);
 }
+.article__img-wr {
+  max-width: 20rem;
+  padding-bottom: 2rem;
+}
+.article__img {
+  width: 100%;
+}
 .article__title {
   padding-bottom: 1rem;
   font-family: Montserrat, Arial, Helvetica, sans-serif;

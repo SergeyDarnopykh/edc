@@ -4,13 +4,17 @@
     <div class="articles">
         @foreach ($articles as $article)
             <a class="article" href="{{ $article->path() }}">
-                <div class="articles__wrapper">
-                    <div class="article__title">
-                        {{ $article->title }}
+                <div class="article__wrapper">
+                    <div class="article__img-wr">
+                        <img class="article__img" src="{{ $article->image }}" alt=""/>
                     </div>
-                    <div class="article__body">
-                        {{ $article['short_description'] }}<br><br>
-                        {{ $article['body'] }}
+                    <div class="article__main-info">
+                        <div class="article__title">
+                            {{ $article->title }}
+                        </div>
+                        <div class="article__body">
+                            {!! $article->prettyBody() !!}
+                        </div>
                     </div>
                 </div>
             </a>

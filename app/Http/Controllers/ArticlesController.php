@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+use Image;
 use App\Article;
 
 class ArticlesController extends Controller
 {
+    const MARKDOWN_IMAGE_REGEXP = '/\!\[.*\]\((.*)\)/';
+
     /**
      * Display a listing of the resource.
      *
@@ -37,7 +38,7 @@ class ArticlesController extends Controller
      */
     public function store()
     {
-        Article::create($this->validateArticle());
+        Article::create($this->processArticle());
 
         return redirect(route('articles.index'));
     }
@@ -72,7 +73,7 @@ class ArticlesController extends Controller
      */
     public function update(Article $article)
     {
-        $article->update($this->validateArticle());
+        $article->update($this->processArticle());
 
         return redirect(route('articles.index'));
     }
@@ -90,13 +91,65 @@ class ArticlesController extends Controller
         return redirect(route('articles.index'));
     }
 
+    protected function processArticle()
+    {
+        $article = $this->validateArticle();
+
+        $article['body'] = $this->saveArticleImages($article['body']);
+
+        if (isset($article['image'])) {
+            $article['image'] = $this->saveUploadedImage($article['image']);
+        }
+
+        return $article;
+    }
+
     protected function validateArticle()
     {
-        return request()->validate([
+        $article = request()->validate([
             'title' => 'required',
             'code' => 'required',
             'short_description' => 'required',
-            'body' => 'required',
+            'body' => 'required'
         ]);
+
+        if (request('image')) {
+            $article = array_merge(request()->validate([
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]), $article);
+        }
+
+        return $article;
+    }
+
+    protected function saveArticleImages($articleBody) {
+        return preg_replace_callback(self::MARKDOWN_IMAGE_REGEXP, function($matches) {
+            $imageMarkup = $matches[0];
+            $imageUrl = $matches[1];
+
+            $savedImageUrl = $this->saveImage($imageUrl, true);
+
+            return str_replace($imageUrl, $savedImageUrl, $imageMarkup);
+        }, $articleBody);
+    }
+
+    protected function saveUploadedImage($image)
+    {
+        $imageName = time() . '.' . $image->clientExtension();
+
+        $image->move(public_path('images'), $imageName);
+
+        return 'images/' . $imageName;
+    }
+
+    protected function saveImage($path)
+    {
+        $imageFile = Image::make($path);
+
+        $relativePath = 'images/' . strtok(basename($path), '?');
+
+        $imageFile->save(public_path($relativePath));
+
+        return $relativePath;
     }
 }

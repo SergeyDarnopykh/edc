@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="form-wrapper">
-        <form class="form" action="{{ route('articles.update', $article) }}" method="POST">
+        <form class="form" action="{{ route('articles.update', $article) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -33,11 +33,21 @@
             </div>
 
             <div class="form__row">
-                @include('form.input', [
-                    'title' => 'short_description',
-                    'label' => 'Short description',
-                    'value' => $article['short_description']
-                ])
+                <div class="form__cell">
+                    @include('form.input', [
+                        'title' => 'short_description',
+                        'label' => 'Short description',
+                        'value' => $article['short_description']
+                    ])
+                </div>
+                <div class="form__cell">
+                    @include('form.input', [
+                       'title' => 'image',
+                       'type' => 'file',
+                       'required' => false,
+                       'label' => 'Image'
+                    ])
+                </div>
             </div>
 
             <div class="form__row">

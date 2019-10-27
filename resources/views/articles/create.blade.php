@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="form-wrapper">
-        <form class="form" action="{{ route('articles.store') }}" method="post">
+        <form class="form" action="{{ route('articles.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form__info">
                 <div class="form__title">
@@ -29,10 +29,19 @@
             </div>
 
             <div class="form__row">
-                @include('form.input', [
-                    'title' => 'short_description',
-                    'label' => 'Short description'
-                ])
+                <div class="form__cell">
+                    @include('form.input', [
+                        'title' => 'short_description',
+                        'label' => 'Short description'
+                    ])
+                </div>
+                <div class="form__cell">
+                    @include('form.input', [
+                       'title' => 'image',
+                       'type' => 'file',
+                       'label' => 'Image'
+                    ])
+                </div>
             </div>
 
             <div class="form__row">
